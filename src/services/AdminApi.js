@@ -18,3 +18,21 @@ export const adminLogin = async(data)=>{
     }
 }
 
+export const AdminAddCar = async(data)=>{
+
+    try {
+   console.log("sending car data :",data);
+
+        const response = await axiosInstance.post("/admin/car/add", data, {
+            withCredentials: true,
+          });
+          
+        return response?.data;
+    } catch (error) {
+        console.error('Error adding car:', error.response?.data || error.message);
+    
+        // Display error message
+        toast.error('Error adding car');
+    }
+}
+

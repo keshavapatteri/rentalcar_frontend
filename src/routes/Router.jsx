@@ -39,6 +39,18 @@ import UserAboutPage from "../pages/User/UserAboutPage";
 import UserContactPage from "../pages/User/UserContactPage"
 import UserLoginPage from "../pages/Home/UserLoginPage"
 import AboutPage from "../pages/Home/AboutPage";
+import AdminCarList from "../pages/admin/AdminCarList";
+import AdminCarUpdate from "../pages/admin/AdminCarUpdate";
+import AdminCarDelete from "../pages/admin/AdminCarDelete";
+import AdminBookingList from "../pages/admin/AdminBookingList";
+import AdminReviewList from "../pages/admin/AdminReviewList";
+import AdminUserList from "../pages/admin/AdminUserList";
+import AdminReviewUpdate from "../pages/admin/AdminReviewUpdate";
+import MyBooking from "../pages/User/MyBooking";
+import MyProfile from "../pages/User/MyProfile";
+import Wishlist from "../pages/User/Wishlist";
+import AdminContactMessage from "../pages/admin/AdminContactMessage";
+
 
 // import AboutPage from "../pages/HOME/AboutPage";
 
@@ -117,10 +129,25 @@ export const router = createBrowserRouter([
                 path: 'contactpage', // Use relative path for the car list page
                 element: <UserContactPage/>,
             },
-         
+            {
+                path: 'mybooking', // Use relative path for the car list page
+                element: <MyBooking/>,
+            },
+
+            {
+                path: 'myprofile', // Use relative path for the car list page
+                element: <MyProfile/>,
+            },
+
+            {
+                path: 'Wishlist', // Use relative path for the car list page
+                element: <Wishlist/>,
+            },
+
+            Wishlist
         ]
-    },
-    
+    },                          
+         
     {
         path: "/admin",
         element: <AdminLayout />,
@@ -129,19 +156,77 @@ export const router = createBrowserRouter([
                 path: "AdminPage",  // Updated path here
                 element: <AdminHomePage />,
             },
+
+       //car     
             {
                 path: 'Admin-car',
                 element: <AdminCarPage/>,
             },
             {
+                path: 'Admin-carlist',
+                element: <AdminCarList/>,
+            },
+            {
+                path: 'Admin-carupdate/:id',
+                element: <AdminCarUpdate/>,
+            },
+            
+            {
+                path: 'Admin-cardelete/:id',
+                element: <AdminCarDelete/>,
+            },
+//Bookings
+{
+    path: 'Admin-bookinglist',
+    element: <AdminBookingList/>,
+},
+
+
+
+
+
+
+
+//Review
+
+{
+    path: 'Admin-ReviewList/:id',
+    element: <AdminReviewList/>,
+},
+
+{
+    path: 'Admin-Update/:id',
+    element: <AdminReviewUpdate/>,
+},
+
+
+
+//user
+{
+    path: 'Admin-AdminUserList/:id',
+    element: <AdminUserList/>,
+},
+
+////////////////////////////////////////////////
+            {                                        
                 path: 'review',
                 element: <AdminReviewPage />,
-            },
-          
+            },                                      
+                                                          ///////////// ===========>  NOT USING
             {
                 path: 'user',
                 element: <AdminUserPage />,
             },
+
+ /////////////////////////////////////////////////////           
+            {
+                path: 'contact-message',
+                element: <AdminContactMessage />,
+            },
+
+
+
+            
         ]
     },
 ]);

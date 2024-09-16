@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import DarkMode from '../ui/DarkMode';
 import Cookies from 'js-cookie';
-
+import toast from 'react-hot-toast';
 const UserHeader = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
@@ -13,7 +13,9 @@ const UserHeader = () => {
 
   const handleLogout = () => {
     Cookies.remove('userLogin');
-    navigate('/home');
+    toast.success('Logout Success'); 
+    navigate('/');
+   
   };
 
   return (
@@ -44,7 +46,16 @@ const UserHeader = () => {
           <Link to="/user/contactpage" className="hover:text-yellow-300 transition-colors">Contact-Page</Link>
           
         </nav>
+        <div className="dropdown dropdown-end">
+  <div tabIndex={0} role="button" className="btn m-1">Profile</div>
+  <ul tabIndex={0} className="dropdown-content menu bg-white text-black rounded-box z-[1] w-52 p-2 shadow">
+  <li><Link to="/user/mybooking">Mybooking</Link></li>
 
+    <li><Link to="/user/myprofile"><a>Profile</a></Link></li>   
+    <li><Link to="/user/Wishlist"><a>Wishlist</a></Link></li>   
+    <li><a>Logout</a></li>
+  </ul>
+</div>
         {/* Desktop Actions */}
         <div className="hidden md:flex items-center space-x-4 md:space-x-6">
           <DarkMode />
@@ -83,11 +94,7 @@ const UserHeader = () => {
            
               
             
-            <Link to="/admin-login">
-              <button className="btn btn-primary px-4 py-2 rounded-full bg-red-500 hover:bg-red-600 text-white font-semibold transition-colors">
-                ADMIN-LOGIN
-              </button>
-            </Link>
+            
             <DarkMode />
           </nav>
         </div>

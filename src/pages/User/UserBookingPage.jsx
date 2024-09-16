@@ -9,15 +9,11 @@ import { loadStripe } from '@stripe/stripe-js';
 
 const UserBookingPage = () => {
   const [selectedCar, setSelectedCar] = useState(null);
-  const [totalCost, setTotalCost] = useState(0);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-    watch,
-  } = useForm();
+  const [totalCost, setTotalCost] = useState(null);
+  const [user, setUser] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const { register, handleSubmit, formState: { errors }, setValue, watch, setError } = useForm();
   const navigate = useNavigate();
   const { id } = useParams(); // Retrieve the id from the URL
 
@@ -28,11 +24,10 @@ const UserBookingPage = () => {
         url: `/car/details/${id}`, // Correct endpoint with ID
         method: 'GET',
       });
-      console.log('API Response:', response);
       setSelectedCar(response?.data?.data || {});
-      setTotalCost(response?.data?.data?.priceperday || 0); // Initialize total cost with fetched price
+      setTotalCost(response?.data?.data?.priceperday || 0);
+      console.log("carDetails ===>", response);
     } catch (error) {
-      console.error('Error fetching car data:', error.response ? error.response.data : error.message);
       toast.error('Failed to fetch car data');
     }
   };
@@ -40,6 +35,22 @@ const UserBookingPage = () => {
   useEffect(() => {
     fetchCarData();
   }, [id]); // Depend on id to refetch when it changes
+
+  // Fetch user profile
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await axiosInstance.get('/user/profile', {
+          withCredentials: true,
+        });
+        setUser(response?.data?.data);
+        console.log("fetchUser", response.data.data);
+      } catch (error) {
+        console.log("Error fetching user profile:", error.response?.data?.message || error.message);
+      }
+    };
+    fetchUser();
+  }, []);
 
   // Update total cost based on date and time inputs
   const updateTotalCost = () => {
@@ -57,69 +68,81 @@ const UserBookingPage = () => {
     updateTotalCost();
   }, [watch('pickupdate'), watch('dropoffdate'), watch('pickuptime'), watch('dropofftime')]);
 
+  // Ensure dropoff date is not earlier than pickup date
+  useEffect(() => {
+    const pickupDate = watch('pickupdate');
+    const dropoffDate = watch('dropoffdate');
+
+    if (pickupDate && dropoffDate && new Date(dropoffDate) < new Date(pickupDate)) {
+      setError('dropoffdate', {
+        type: 'manual',
+        message: 'Drop-off Date cannot be earlier than Pickup Date',
+      });
+    }
+  }, [watch('pickupdate'), watch('dropoffdate')]);
+
   // Handle payment
   const onSubmit = async (data) => {
     try {
+      setIsSubmitting(true);
       const bookingData = {
         carId: id,
+        userId: user?._id,
         pickuplocation: data.pickuplocation,
         pickupdate: data.pickupdate,
         pickuptime: data.pickuptime,
         dropofflocation: data.dropofflocation,
         dropoffdate: data.dropoffdate,
         dropofftime: data.dropofftime,
-        totalcost: totalCost, // Ensure this is a number
+        totalcost: totalCost,
       };
-  
-      console.log("onSubmit bookingData:", bookingData);
-  
+
+      console.log("bookingData ===", bookingData);
+
       const response = await userBooking(bookingData);
-      Cookies.remove('userBooking');
-  
+
       if (response) {
-        Cookies.set('userBooking', JSON.stringify({ type: 'user', token: response?.token }), { expires: 7 });
         toast.success('Booking successful');
-        
-        // Call makePayment and pass bookingData
+        console.log("bookingResponse ===>", response);
         await makePayment(bookingData);
       } else {
         toast.error('Unable to complete booking');
       }
     } catch (error) {
       toast.error('Booking failed');
-      console.error('Booking error:', error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
-  
+
+  // Payment
   const makePayment = async (bookingData) => {
     try {
       const stripe = await loadStripe(import.meta.env.VITE_STRIPE_Publishable_key);
       if (!stripe) {
         throw new Error('Stripe failed to load');
       }
-      const sessionResponse = await axiosInstance({
-        url: "/payment/create",
-        method: "POST",
-        data: { bookingData, totalCost },
+      const sessionResponse = await axiosInstance.post('/payment/create', {
+        bookingData,
+        totalCost,
+        userId: user?._id,
+        carDetails: selectedCar,
       });
-      console.log(sessionResponse, "session=======>");
-      // Create a checkout session
       const sessionId = sessionResponse?.data?.sessionId;
-  
-      const result = await stripe.redirectToCheckout({
-        sessionId: sessionId,
-      });
-  
-      if (result.error) {
-        console.error(result.error.message);
-        toast.error(result.error.message);
+
+      if (sessionId) {
+        const result = await stripe.redirectToCheckout({ sessionId });
+        if (result.error) {
+          console.error(result.error.message);
+          toast.error(result.error.message);
+        }
       }
     } catch (error) {
       console.error('Payment error:', error);
-      // toast.error('An error occurred during payment processing. Please try again.');
+      toast.error('An error occurred during payment processing. Please try again.');
     }
   };
-  
+
   return (
     <div>
       <div className="hero bg-base-200 py-20">
@@ -136,99 +159,121 @@ const UserBookingPage = () => {
               {selectedCar && (
                 <div className="mb-4">
                   <h2 className="text-xl font-bold mb-2">Selected Car</h2>
-                  <p><strong>Car ID:</strong> {selectedCar._id}</p> {/* Display Car ID */}
-                  <p><strong>Brand:</strong> {selectedCar.brandname}</p>
+                  <p><strong>Car ID:</strong> {selectedCar._id}</p>
+                  <p><strong>Brand:</strong> {selectedCar.title}</p>
                   <p><strong>Model:</strong> {selectedCar.model}</p>
                   <p><strong>Year:</strong> {selectedCar.year}</p>
                   <p><strong>Price per Day:</strong> ₹{selectedCar.priceperday}</p>
-                  <img src={selectedCar.image} alt={selectedCar.model} className="w-full h-auto mt-2" />
                 </div>
               )}
 
-              {/* Booking Form */}
+              {/* Pickup and Drop-off Details */}
               <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Pickup Location</span>
-                </label>
-                <input
-                  type="text"
-                  {...register('pickuplocation', { required: 'Pickup location is required' })}
-                  placeholder="Pickup location"
-                  className="input input-bordered"
-                />
-                {errors.pickuplocation && <span className="text-red-500">{errors.pickuplocation.message}</span>}
+                <label className="label">Pickup Location</label>
+                <select
+                  {...register('pickuplocation', { required: true })}
+                  className="select select-bordered"
+                >
+                  <option value="">Select a district</option>
+                  <option value="Thiruvananthapuram">Thiruvananthapuram</option>
+                  <option value="Kollam">Kollam</option>
+                  <option value="Pathanamthitta">Pathanamthitta</option>
+                  <option value="Alappuzha">Alappuzha</option>
+                  <option value="Kottayam">Kottayam</option>
+                  <option value="Idukki">Idukki</option>
+                  <option value="Ernakulam">Ernakulam</option>
+                  <option value="Thrissur">Thrissur</option>
+                  <option value="Palakkad">Palakkad</option>
+                  <option value="Malappuram">Malappuram</option>
+                  <option value="Kozhikode">Kozhikode</option>
+                  <option value="Wayanad">Wayanad</option>
+                  <option value="Kannur">Kannur</option>
+                  <option value="Kasaragod">Kasaragod</option>
+                </select>
+                {errors.pickuplocation && <p className="text-red-500">Pickup Location is required</p>}
               </div>
+
               <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Pickup Date</span>
-                </label>
+                <label className="label">Pickup Date</label>
                 <input
+                  {...register('pickupdate', { required: true })}
                   type="date"
-                  {...register('pickupdate', { required: 'Pickup date is required' })}
                   className="input input-bordered"
+                  min={new Date().toISOString().split('T')[0]} // sets today's date as the minimum
                 />
-                {errors.pickupdate && <span className="text-red-500">{errors.pickupdate.message}</span>}
+                {errors.pickupdate && <p className="text-red-500">Pickup Date is required</p>}
               </div>
+
               <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Pickup Time</span>
-                </label>
+                <label className="label">Pickup Time</label>
                 <input
+                  {...register('pickuptime', { required: true })}
                   type="time"
-                  {...register('pickuptime', { required: 'Pickup time is required' })}
                   className="input input-bordered"
                 />
-                {errors.pickuptime && <span className="text-red-500">{errors.pickuptime.message}</span>}
+                {errors.pickuptime && <p className="text-red-500">Pickup Time is required</p>}
               </div>
+
               <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Drop-off Location</span>
-                </label>
-                <input
-                  type="text"
-                  {...register('dropofflocation', { required: 'Drop-off location is required' })}
-                  placeholder="Drop-off location"
-                  className="input input-bordered"
-                />
-                {errors.dropofflocation && <span className="text-red-500">{errors.dropofflocation.message}</span>}
+                <label className="label">Drop-off Location</label>
+                <select
+                  {...register('dropofflocation', { required: true })}
+                  className="select select-bordered"
+                >
+                  <option value="">Select a district</option>
+                  <option value="Thiruvananthapuram">Thiruvananthapuram</option>
+                  <option value="Kollam">Kollam</option>
+                  <option value="Pathanamthitta">Pathanamthitta</option>
+                  <option value="Alappuzha">Alappuzha</option>
+                  <option value="Kottayam">Kottayam</option>
+                  <option value="Idukki">Idukki</option>
+                  <option value="Ernakulam">Ernakulam</option>
+                  <option value="Thrissur">Thrissur</option>
+                  <option value="Palakkad">Palakkad</option>
+                  <option value="Malappuram">Malappuram</option>
+                  <option value="Kozhikode">Kozhikode</option>
+                  <option value="Wayanad">Wayanad</option>
+                  <option value="Kannur">Kannur</option>
+                  <option value="Kasaragod">Kasaragod</option>
+                </select>
+                {errors.dropofflocation && <p className="text-red-500">Drop-off Location is required</p>}
               </div>
+
               <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Drop-off Date</span>
-                </label>
+                <label className="label">Drop-off Date</label>
                 <input
+                  {...register('dropoffdate', { required: true })}
                   type="date"
-                  {...register('dropoffdate', { required: 'Drop-off date is required' })}
                   className="input input-bordered"
+                  min={watch('pickupdate')} // Ensures dropoffdate is not before pickupdate
                 />
-                {errors.dropoffdate && <span className="text-red-500">{errors.dropoffdate.message}</span>}
+                {errors.dropoffdate && <p className="text-red-500">{errors.dropoffdate.message}</p>}
               </div>
+
               <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Drop-off Time</span>
-                </label>
+                <label className="label">Drop-off Time</label>
                 <input
+                  {...register('dropofftime', { required: true })}
                   type="time"
-                  {...register('dropofftime', { required: 'Drop-off time is required' })}
                   className="input input-bordered"
                 />
-                {errors.dropofftime && <span className="text-red-500">{errors.dropofftime.message}</span>}
+                {errors.dropofftime && <p className="text-red-500">Drop-off Time is required</p>}
               </div>
+
               <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Total Cost</span>
-                </label>
+                <label className="label">Total Cost</label>
                 <input
+                  {...register('totalcost', { required: true })}
                   type="text"
-                  {...register('totalcost')}
-                  value={`₹${totalCost}`} // Display as currency
+                  className="input input-bordered"
+                  value={`₹${totalCost || 0}`} // Display total cost
                   readOnly
-                  className="input input-bordered"
                 />
               </div>
+
               <div className="form-control mt-6">
-                <button type="submit" className="btn btn-primary" onClick={makePayment}>
-                  Book Now
+                <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
+                  {isSubmitting ? 'Processing...' : 'Proceed to Payment'}
                 </button>
               </div>
             </form>
