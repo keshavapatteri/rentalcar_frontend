@@ -19,7 +19,8 @@ const UserHeader = () => {
   };
 
   return (
-    <header className="bg-gradient-to-r from-blue-700 via-blue-500 to-blue-300 text-white shadow-lg">
+    <header className="bg-gradient-to-r from-gray-800 via-gray-900 to-black text-white shadow-lg">
+ 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
         {/* Logo and Title */}
         <div className="flex items-center space-x-4">
@@ -84,7 +85,8 @@ const UserHeader = () => {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-blue-700 text-white absolute top-16 left-0 w-full z-50">
+        <div className="md:hidden bg-black text-white absolute top-16 left-0 w-full z-50">
+
           <nav className="flex flex-col items-center space-y-4 py-4">
             <Link to="/user/home" className="hover:text-yellow-300 transition-colors" onClick={toggleMobileMenu}>Home</Link>
             <Link to="/user/car" className="hover:text-yellow-300 transition-colors" onClick={toggleMobileMenu}>Car-List</Link>

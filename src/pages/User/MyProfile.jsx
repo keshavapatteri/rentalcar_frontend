@@ -38,10 +38,20 @@ const MyProfile = () => {
             <div className="space-y-6">
               <div className="flex items-center space-x-4">
                 {/* Add a profile picture here if available */}
-                <div className="w-24 h-24 bg-gray-300 rounded-full flex items-center justify-center text-xl font-bold text-white">
-                  {/* Placeholder for profile picture */}
-                  <span>Pic</span>
-                </div>
+                <div className="w-24 h-24 bg-gray-300 rounded-full flex items-center justify-center text-xl font-bold text-white relative">
+  {/* If profile image is available, display it */}
+  {profile.image ? (
+    <img
+      src={profile.image}
+      alt="Profile"
+      className="w-full h-full object-cover rounded-full"
+    />
+  ) : (
+    /* If no image, display placeholder text */
+    <span className="text-gray-600">Pic</span>
+  )}
+</div>
+
                 <div>
                   <h2 className="text-2xl font-semibold">{profile.name}</h2>
                   <p className="text-gray-600">{profile.email}</p>

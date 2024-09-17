@@ -50,6 +50,7 @@ import MyBooking from "../pages/User/MyBooking";
 import MyProfile from "../pages/User/MyProfile";
 import Wishlist from "../pages/User/Wishlist";
 import AdminContactMessage from "../pages/admin/AdminContactMessage";
+import Tearms from "../pages/User/Tearms";
 
 
 // import AboutPage from "../pages/HOME/AboutPage";
@@ -144,7 +145,12 @@ export const router = createBrowserRouter([
                 element: <Wishlist/>,
             },
 
-            Wishlist
+            
+            {
+                path: 'Tearms', // Use relative path for the car list page
+                element: <Tearms/>,
+            },
+
         ]
     },                          
          

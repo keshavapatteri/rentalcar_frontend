@@ -19,7 +19,7 @@ const CarCards = ({ car, userId }) => {
         setIsWishlisted(response.data.isWishlisted);
       } catch (error) {
         console.error('Error fetching wishlist status:', error);
-        toast.error("Failed to fetch wishlist status");
+        // toast.error("Failed to fetch wishlist status");
       }
     };
 

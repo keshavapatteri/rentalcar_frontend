@@ -29,6 +29,7 @@ const UserHomePage = () => {
 
   return (
     <div>
+
      <div className="container mx-auto p-4">
   <h3 className="text-4xl font-extrabold mb-8 text-[#526278] dark:text-[#F3F4F6] text-center">
     Enjoy Our Cars

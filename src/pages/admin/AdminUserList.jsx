@@ -47,6 +47,7 @@ const AdminUserList = () => {
         return (
             <AdminUserListCard
                 key={user._id}
+                userimage={user.image}
                 userId={user._id}
                 userName={user.name}
                 userEmail={user.email}

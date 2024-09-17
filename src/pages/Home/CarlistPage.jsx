@@ -1,80 +1,61 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import { axiosInstance } from '../../../config/axiosinstance';
+import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 
-const CarCard = ({ image, title, description, seat, price }) => (
-  <div className="card card-compact bg-base-100 shadow-xl flex flex-col">
-    <figure className="relative w-full aspect-w-16 aspect-h-9">
-      <img
-        src={image}
-        alt={title}
-        className="object-cover w-full h-full rounded-t-lg"
-      />
-    </figure>
-    <div className="card-body flex-1 p-4">
-      <h2 className="card-title text-xl font-semibold mb-2">{title}</h2>
-      <p className="text-gray-600 mb-2">{description}</p>
-      <p className="text-gray-500 mb-4">{seat}</p>
-      
-      <div className="card-actions justify-end mt-auto">
-        <Link to="/signup">
-          <button className="btn btn-primary bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full">
-            Per/Day {price}
-          </button>
-        </Link>
-      </div>
-    </div>
-  </div>
-);
-
 const CarlistPage = () => {
+  const [cars, setCars] = useState([]);
+
+  const fetchCar = async () => {
+    try {
+      const response = await axiosInstance({
+        url: "/car/carlist",
+        method: "GET",
+      });
+      setCars(response?.data?.data || []);
+      console.log(response);
+    } catch (error) {
+      toast.error("Failed to fetch cars");
+    }
+  };
+
+  useEffect(() => {
+    fetchCar();
+  }, []);
+
   return (
-    <div className="p-4">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 ">
-        <CarCard 
-          image="https://stimg.cardekho.com/images/carexteriorimages/630x420/Maruti/Alto-800/10327/1687348176706/front-left-side-47.jpg" 
-          title="Alto-800" 
-          description="Petrol" 
-          seat="Seating Capacity: 5"
-          price="800" 
-        />
-        <CarCard 
-          image="https://imgd.aeplcdn.com/310x174/n/cw/ec/26742/swift-exterior-right-front-three-quarter-2.jpeg?q=80" 
-          title="Swift" 
-          description="Diesel" 
-          seat="Seating Capacity: 5"
-          price="1100" 
-        />
-        <CarCard 
-          image="https://gomechanic.in/blog/wp-content/uploads/2020/04/Maruti-Suzuki-Ritz-1280x720-1-1000x563.jpg" 
-          title="Ritz" 
-          description="Petrol/Diesel" 
-          seat="Seating Capacity: 5"
-          price="1100" 
-        />
-        <CarCard 
-          image="https://spn-sta.spinny.com/blog/20221004191046/Hyundai-Venue-2022.jpg?compress=true&quality=80&w=1200&dpr=2.6" 
-          title="Creta" 
-          description="Petrol/Diesel"
-          seat="Seating Capacity: 5"
-          price="1500" 
-        />
-        <CarCard 
-          image="https://stimg.cardekho.com/images/carexteriorimages/630x420/Renault/KWID/10076/1717586320303/front-left-side-47.jpg?impolicy=resize&imwidth=480" 
-          title="Kwid" 
-          description="Petrol/Diesel"
-          seat="Seating Capacity: 5"
-          price="1600" 
-        />
-        <CarCard 
-          image="https://akm-img-a-in.tosshub.com/indiatoday/images/story/202202/Tata_Nexon_3_lakh_units.jpg?size=690:388" 
-          title="Nexon" 
-          description="Diesel" 
-          seat="Seating Capacity: 5"
-          price="1600" 
-        />
+    <div className="container mx-auto p-4 lg:p-8">
+      <h1 className="text-4xl font-extrabold text-center mb-8 text-gray-800">Available Cars</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {cars.map((car) => (
+          <div
+            key={car._id}
+            className="bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105"
+          >
+            <img
+              src={car.image}
+              alt={car.title}
+              className="w-full h-64 object-cover"
+            />
+            <div className="p-6">
+              <h2 className="text-2xl font-semibold text-gray-900 mb-2">{car.title}</h2>
+              
+              <p className="text-lg text-gray-700 mb-2">Model: <span className="font-medium">{car.model}</span></p>
+              <p className="text-xl text-blue-600 font-semibold mb-4">₹{car.priceperday}/day</p>
+              <p className="text-gray-600 mb-2">Capacity: <span className="font-medium">{car.capacity} seats</span></p>
+              <p className="text-gray-600 mb-2">Fuel: <span className="font-medium">{car.fuel}</span></p>
+              <p className="text-gray-600 mb-4">Transmission: <span className="font-medium">{car.transmission}</span></p>
+              <Link to="/signup">
+                <button className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300 ease-in-out">
+                  Book Now
+                </button>
+              </Link>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default CarlistPage;

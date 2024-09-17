@@ -15,7 +15,17 @@ const SignupPage = () => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await userSignup(data);
+      const formData = new FormData(); // Create a FormData object to handle image upload
+      for (const key in data) {
+        if (key === 'image') {
+          formData.append(key, data[key][0]); // Append the image file
+        } else {
+          formData.append(key, data[key]); // Append other fields
+        }
+      }
+
+      const response = await userSignup(formData); // Send formData in the request
+      
       if (response) {
         toast.success(response.message);
         navigate('/login');
@@ -24,7 +34,6 @@ const SignupPage = () => {
       toast.error(error.response?.data?.message || 'Signup failed');
     }
   };
-
   return (
     <div className="flex flex-col lg:flex-row min-h-screen bg-gray-100 dark:bg-gray-900">
       {/* Left Side with Image */}
@@ -45,6 +54,7 @@ const SignupPage = () => {
           </p>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+           
             <div className="form-control">
               <label className="label">
                 <span className="label-text text-gray-700 dark:text-gray-300">Name</span>
@@ -57,6 +67,17 @@ const SignupPage = () => {
               />
               {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
             </div>
+               {/* image */}
+
+          <div className="mb-4">
+            <label className="block text-gray-700">Image</label>
+            <input
+              type="file"
+              className={`form-input mt-1 block w-full border rounded-md ${errors.image ? 'border-red-500' : ''}`}
+              {...register('image', { required: 'Image is required' })}
+            />
+            {errors.image && <p className="text-red-500 text-sm mt-1">{errors.image.message}</p>}
+          </div>
 
             <div className="form-control">
               <label className="label">
