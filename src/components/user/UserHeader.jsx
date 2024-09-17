@@ -54,22 +54,17 @@ const UserHeader = () => {
 
     <li><Link to="/user/myprofile"><a>Profile</a></Link></li>   
     <li><Link to="/user/Wishlist"><a>Wishlist</a></Link></li>   
-    <li><a>Logout</a></li>
+    <li onClick={handleLogout}><a>Logout</a></li>
   </ul>
 </div>
         {/* Desktop Actions */}
         <div className="hidden md:flex items-center space-x-4 md:space-x-6">
           <DarkMode />
-          
-          <Link to="/admin-login">
-            <button className="btn btn-primary px-4 py-2 rounded-full bg-red-500 hover:bg-red-600 text-white font-semibold transition-colors">
-              ADMIN-LOGIN
-            </button>
-          </Link>
+        
         </div>
 
         {/* Mobile Menu Button */}
-        <button className="btn btn-secondary" onClick={handleLogout}>Logout</button>
+        
         <button
           className="md:hidden text-white focus:outline-none"
           onClick={toggleMobileMenu}

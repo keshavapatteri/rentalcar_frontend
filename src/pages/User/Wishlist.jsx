@@ -57,7 +57,7 @@ const Wishlist = () => {
             </div>
           ))
         ) : (
-          <p>Loading...</p>
+          <p>Please Add WishList</p>
         )}
       </div>
     </div>

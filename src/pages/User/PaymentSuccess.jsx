@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { axiosInstance } from '../../../config/axiosinstance';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const PaymentSuccess = () => {
   const [payment, setPayment] = useState({});
   const [booking, setBooking] = useState([]);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const fetchPayment = async () => {
     try {
@@ -13,12 +15,17 @@ const PaymentSuccess = () => {
         method: 'PUT',
         withCredentials: true,
       });
+
       setPayment(response?.data?.data || {});
       toast.success('Payment status updated');
       console.log(response);
+
+      // Navigate to /user/home after successful payment update
+      navigate('/user/home');
+
     } catch (error) {
       console.log(error);
-      toast.error('Failed to update payment status');
+      // toast.error('Failed to update payment status');
     }
   };
 
@@ -56,7 +63,7 @@ const PaymentSuccess = () => {
         <p className="text-lg text-gray-600 dark:text-gray-400 mb-6">Thank you for your payment. Your transaction has been completed successfully.</p>
         <button
           className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded-lg transition duration-300 ease-in-out"
-          onClick={fetchPayment}
+          onClick={fetchPayment} // Call fetchPayment function on button click
         >
           Continue
         </button>

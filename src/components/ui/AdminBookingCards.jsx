@@ -73,8 +73,8 @@ const AdminBookingCards = ({ booking }) => {
   return (
     <div className="max-w-4xl mx-auto bg-gray-900 shadow-lg rounded-xl overflow-hidden mb-6">
       <div className="md:flex">
-        {/* Car Image */}
-        {/* <div className="md:w-1/3 bg-gray-800 p-2">
+       {/* car image */}
+         {/* <div className="md:w-1/3 bg-gray-800 p-2">
           {carId.image ? (
             <img src={carId.image} alt={carId.title} className="object-cover w-full h-full rounded-lg" />
           ) : (

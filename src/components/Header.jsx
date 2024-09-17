@@ -10,7 +10,7 @@ const Header = () => {
     };
 
     return (
-        <header className="bg-gradient-to-r from-blue-700 via-blue-500 to-blue-300 text-white shadow-lg">
+        <header className="bg-black text-white shadow-lg">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-wrap items-center justify-between">
                 {/* Logo and Title */}
                 <div className="flex items-center space-x-4">
@@ -26,20 +26,20 @@ const Header = () => {
 
                 {/* Desktop Navigation Links */}
                 <nav className="hidden md:flex flex-grow items-center justify-center space-x-6 text-lg font-semibold">
-    <Link to="/" className="hover:text-yellow-300 pt-2 pl-2 transition-colors">Home</Link>
-    <Link to="/about" className="hover:text-yellow-300 pt-2 transition-colors">About</Link>
-    <Link to="/contact" className="hover:text-yellow-300 pt-2 transition-colors">Contact-US</Link>
-    <Link to="/car-list" className="hover:text-yellow-300 pt-2 transition-colors">Cars Details</Link>
-</nav>
+                    <Link to="/" className="hover:text-yellow-300 pt-2 pl-2 transition-colors">Home</Link>
+                    <Link to="/about" className="hover:text-yellow-300 pt-2 transition-colors">About</Link>
+                    <Link to="/contact" className="hover:text-yellow-300 pt-2 transition-colors">Contact-US</Link>
+                    <Link to="/car-list" className="hover:text-yellow-300 pt-2 transition-colors">Cars Details</Link>
+                </nav>
 
                 {/* Desktop Actions */}
                 <div className="hidden md:flex items-center space-x-4 md:space-x-6">
                     <DarkMode />
                     <Link to="/signup">
-                        <button className="btn btn-primary px-4 py-2 rounded-full bg-yellow-500 hover:bg-yellow-600 text-white font-semibold transition-colors">Join us</button>
+                        <button className="btn btn-primary px-4 py-2 rounded-full bg-green-500 hover:bg-green-600 text-white font-semibold transition-colors">Join us</button>
                     </Link>
                     <Link to="/admin-login">
-                        <button className="btn btn-primary px-4 py-2 rounded-full bg-red-500 hover:bg-red-600 text-white font-semibold transition-colors">ADMIN-LOGIN</button>
+                        <button className="btn btn-primary px-4 py-2 rounded-full bg-purple-500 hover:bg-purple-600 text-white font-semibold transition-colors">ADMIN-LOGIN</button>
                     </Link>
                 </div>
 
@@ -56,21 +56,20 @@ const Header = () => {
 
             {/* Mobile Menu */}
             {isMobileMenuOpen && (
-                <nav className="md:hidden bg-gradient-to-r from-blue-700 via-blue-500 to-blue-300 text-white shadow-lg">
+                <nav className="md:hidden bg-black text-white shadow-lg">
                     <div className="container mx-auto px-4 py-4">
                         <div className="flex flex-col space-y-4">
                             <DarkMode />
-                            <Link to="/" className="block py-3 px-4  text-lg hover:text-yellow-300 transition-colors" onClick={toggleMobileMenu}>Home</Link>
+                            <Link to="/" className="block py-3 px-4 text-lg hover:text-yellow-300 transition-colors" onClick={toggleMobileMenu}>Home</Link>
                             <Link to="/car-list" className="block py-3 px-4 text-lg hover:text-yellow-300 transition-colors" onClick={toggleMobileMenu}>Cars</Link>
                             <Link to="/about" className="block py-3 px-4 text-lg hover:text-yellow-300 transition-colors" onClick={toggleMobileMenu}>About</Link>
                             <Link to="/contact" className="block py-3 px-4 text-lg hover:text-yellow-300 transition-colors" onClick={toggleMobileMenu}>Contact-US</Link>
-                            
-                         
-                                <Link to="/signup" onClick={toggleMobileMenu}>
-                                <button className="w-full py-3 px-4 rounded-full bg-yellow-500 hover:bg-yellow-600 text-white font-semibold transition-colors">Join us</button>
+
+                            <Link to="/signup" onClick={toggleMobileMenu}>
+                                <button className="w-full py-3 px-4 rounded-full bg-green-500 hover:bg-green-600 text-white font-semibold transition-colors">Join us</button>
                             </Link>
                             <Link to="/admin-login" onClick={toggleMobileMenu}>
-                                <button className="w-full py-3 px-4 rounded-full bg-red-500 hover:bg-red-600 text-white font-semibold transition-colors">ADMIN-LOGIN</button>
+                                <button className="w-full py-3 px-4 rounded-full bg-purple-500 hover:bg-purple-600 text-white font-semibold transition-colors">ADMIN-LOGIN</button>
                             </Link>
                         </div>
                     </div>
