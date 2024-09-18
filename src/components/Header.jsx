@@ -68,9 +68,7 @@ const Header = () => {
                             <Link to="/signup" onClick={toggleMobileMenu}>
                                 <button className="w-full py-3 px-4 rounded-full bg-green-500 hover:bg-green-600 text-white font-semibold transition-colors">Join us</button>
                             </Link>
-                            <Link to="/admin-login" onClick={toggleMobileMenu}>
-                                <button className="w-full py-3 px-4 rounded-full bg-purple-500 hover:bg-purple-600 text-white font-semibold transition-colors">ADMIN-LOGIN</button>
-                            </Link>
+                          
                         </div>
                     </div>
                 </nav>

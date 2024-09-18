@@ -16,7 +16,9 @@ const AdminBookingCards = ({ booking }) => {
     try {
       const response = await axiosInstance.put(`/admin/bookingchange/${_id}`, {}, { withCredentials: true });
       setStatus(response?.data?.data || {});
+      if (response){
       toast.success('Booking status updated');
+    }
     } catch (error) {
       console.error('Error updating status:', error);
       toast.error('Failed to update Booking status');
@@ -26,6 +28,12 @@ const AdminBookingCards = ({ booking }) => {
   useEffect(() => {
     handleFetchStatus();
   }, []);
+
+///delete booking
+
+
+
+
 
   const fetchnodemailer = async () => {
     try {
@@ -69,6 +77,9 @@ const AdminBookingCards = ({ booking }) => {
       console.error('Email sending error:', error);
     }
   };
+
+
+  
 
   return (
     <div className="max-w-4xl mx-auto bg-gray-900 shadow-lg rounded-xl overflow-hidden mb-6">
@@ -141,6 +152,7 @@ const AdminBookingCards = ({ booking }) => {
             >
               Update Status
             </button>
+            <button  className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition">Booking Delete</button>
           </div>
         </div>
       </div>

@@ -133,11 +133,7 @@ const AdminReviewListCards = ({ car, user, rating, reviewText, reviewDate, carId
             <button className="btn btn-error" onClick={handleDeleteReview}>
               DELETE
             </button>
-            <Link to={`/admin/Admin-Update/${ReviewId}`}>
-              <button className="bg-gradient-to-r from-red-500 to-pink-500 text-white font-semibold rounded-lg py-2 px-6 shadow-md hover:from-red-600 hover:to-pink-600 focus:outline-none focus:ring-2 focus:ring-red-300 ml-8">
-                EDIT
-              </button>
-            </Link>
+            
           </div>
         </div>
       </div>

@@ -134,31 +134,51 @@ const SignupPage = () => {
 
             {/* Driving License Number */}
             <div className="form-control">
-              <label className="label">
-                <span className="label-text text-gray-700 dark:text-gray-300">Driving License Number</span>
-              </label>
-              <input
-                type="number"
-                placeholder="Your Driving License Number"
-                {...register("drivinglicencenumber", { required: "Driving license number is required" })}
-                className="input input-bordered w-full"
-              />
-              {errors.drivinglicencenumber && <p className="text-red-500 text-sm mt-1">{errors.drivinglicencenumber.message}</p>}
-            </div>
+  <label className="label">
+    <span className="label-text text-gray-700 dark:text-gray-300">Driving License Number</span>
+  </label>
+  <input
+    type="text"
+    placeholder="Your Driving License Number"
+    {...register("drivinglicencenumber", {
+      required: "Driving license number is required",
+      pattern: {
+        value: /^[0-9]{16}$/,
+        message: "Driving license number must be exactly 16 digits",
+      },
+    })}
+    maxLength={16} // Ensures the input does not exceed 16 characters
+    className="input input-bordered w-full"
+  />
+  {errors.drivinglicencenumber && <p className="text-red-500 text-sm mt-1">{errors.drivinglicencenumber.message}</p>}
+</div>
+
 
             {/* Phone Number */}
             <div className="form-control">
-              <label className="label">
-                <span className="label-text text-gray-700 dark:text-gray-300">Phone Number</span>
-              </label>
-              <input
-                type="tel"
-                placeholder="Your Phone Number"
-                {...register("phonenumber", { required: "Phone number is required" })}
-                className="input input-bordered w-full"
-              />
-              {errors.phonenumber && <p className="text-red-500 text-sm mt-1">{errors.phonenumber.message}</p>}
-            </div>
+  <label className="label">
+    <span className="label-text text-gray-700 dark:text-gray-300">Phone Number</span>
+  </label>
+  <input
+    type="tel"
+    placeholder="Your Phone Number"
+    {...register("phonenumber", {
+      required: "Phone number is required",
+      maxLength: {
+        value: 10,
+        message: "Phone number must be at most 10 digits",
+      },
+      pattern: {
+        value: /^[0-9]*$/,
+        message: "Phone number must contain only digits",
+      },
+    })}
+    maxLength={10} // Ensures the input does not exceed 10 characters
+    className="input input-bordered w-full"
+  />
+  {errors.phonenumber && <p className="text-red-500 text-sm mt-1">{errors.phonenumber.message}</p>}
+</div>
+
 
             <div className="form-control mt-6">
               <button type="submit" className="btn btn-primary w-full">Sign Up</button>

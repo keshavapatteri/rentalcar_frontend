@@ -84,7 +84,7 @@ export const router = createBrowserRouter([
                 element: <ContactPage/>
             },
             {
-                path: 'admin-login',
+                path: 'adminlogin',
                 element: <AdminLoginPage />,
             },
             {

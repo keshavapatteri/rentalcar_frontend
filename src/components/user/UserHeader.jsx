@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import DarkMode from '../ui/DarkMode';
 import Cookies from 'js-cookie';
 import toast from 'react-hot-toast';
+import { CircleUserRound } from 'lucide-react';
+
 const UserHeader = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
@@ -48,13 +50,17 @@ const UserHeader = () => {
           
         </nav>
         <div className="dropdown dropdown-end">
-  <div tabIndex={0} role="button" className="btn m-1">Profile</div>
-  <ul tabIndex={0} className="dropdown-content menu bg-white text-black rounded-box z-[1] w-52 p-2 shadow">
-  <li><Link to="/user/mybooking">Mybooking</Link></li>
+  {/* Profile Icon Trigger for Dropdown */}
+  <div tabIndex={0} role="button" className="cursor-pointer">
+    <CircleUserRound className="w-10 h-10 text-white-800 hover:text-blue-500 " />
+  </div>
 
-    <li><Link to="/user/myprofile"><a>Profile</a></Link></li>   
-    <li><Link to="/user/Wishlist"><a>Wishlist</a></Link></li>   
-    <li onClick={handleLogout}><a>Logout</a></li>
+  {/* Dropdown Menu */}
+  <ul tabIndex={0} className="dropdown-content menu bg-white text-black rounded-box z-[1] w-52 p-2 shadow mt-2">
+    <li><Link to="/user/mybooking">My Booking</Link></li>
+    <li><Link to="/user/myprofile">Profile</Link></li>
+    <li><Link to="/user/Wishlist">Wishlist</Link></li>
+    <li ><button onClick={handleLogout}>Logout</button></li>
   </ul>
 </div>
         {/* Desktop Actions */}
