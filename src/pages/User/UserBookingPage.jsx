@@ -102,7 +102,7 @@ const UserBookingPage = () => {
       const response = await userBooking(bookingData);
 
       if (response) {
-        toast.success('Booking successful');
+        // toast.success('Booking successful');
         console.log("bookingResponse ===>", response);
         await makePayment(bookingData);
       } else {

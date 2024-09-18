@@ -78,7 +78,7 @@ const UserFooter = () => {
             <Link to="/user/aboutpage" className="mb-2 hover:text-green-400 transition duration-300">
               About Us
             </Link>
-            <Link to="/user/terms" className="hover:text-yellow-400 transition duration-300">
+            <Link to="/user/tearms" className="hover:text-yellow-400 transition duration-300">
               Terms & Conditions
             </Link>
           </div>
