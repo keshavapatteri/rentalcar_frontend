@@ -38,9 +38,9 @@ const Header = () => {
                     <Link to="/signup">
                         <button className="btn btn-primary px-4 py-2 rounded-full bg-green-500 hover:bg-green-600 text-white font-semibold transition-colors">Join us</button>
                     </Link>
-                    <Link to="/admin-login">
+                    {/* <Link to="/admin-login">
                         <button className="btn btn-primary px-4 py-2 rounded-full bg-purple-500 hover:bg-purple-600 text-white font-semibold transition-colors">ADMIN-LOGIN</button>
-                    </Link>
+                    </Link> */}
                 </div>
 
                 {/* Mobile Menu Button */}
