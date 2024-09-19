@@ -33,7 +33,7 @@ const AdminFooter = () => {
           <div className="flex flex-col items-center md:items-start">
             <h2 className="text-xl md:text-2xl font-bold text-white mb-4">Car Management</h2>
             <div className="flex flex-col items-center md:items-start space-y-2">
-              <Link to="/admin/car-add" className="text-base md:text-lg hover:text-yellow-400 transition duration-300">
+              <Link to="/admin/Admin-car" className="text-base md:text-lg hover:text-yellow-400 transition duration-300">
                 Add Car
               </Link>
               <Link to="/admin/Admin-carlist" className="text-base md:text-lg hover:text-yellow-400 transition duration-300">
