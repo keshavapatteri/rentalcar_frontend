@@ -30,7 +30,7 @@ const AdminCarDelete = () => {
           withCredentials: true, // This includes credentials like cookies
         });
         alert('Car deleted successfully!');
-        navigate('/admin/car-list');
+        navigate("/admin/Admin-carlist")
       }
     } catch (error) {
       console.error('Error deleting car:', error);
