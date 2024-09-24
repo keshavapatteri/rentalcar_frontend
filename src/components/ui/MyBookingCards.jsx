@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Dialog } from '@headlessui/react';
 import { axiosInstance } from '../../../config/axiosinstance';
+import toast from 'react-hot-toast';
 
 const MyBookingCards = ({ bookings }) => {
   const [showReviewModal, setShowReviewModal] = useState(false);
@@ -18,28 +19,7 @@ const MyBookingCards = ({ bookings }) => {
     }
   };
 
-  // const handleSubmitReview = async (e) => {
-  //   e.preventDefault();
-
-  //   const reviewData = {
-  //     userId: selectedBooking.userId,
-  //     carId: selectedBooking.carId._id,
-  //     rating,
-  //     reviewText,
-  //   };
-
-  //   try {
-  //     await axiosInstance.post('/review/create', reviewData, {
-  //       withCredentials: true,
-  //     });
-  //     alert('Review submitted successfully!');
-  //     setShowReviewModal(false);
-  //     setRating('');
-  //     setReviewText('');
-  //   } catch (error) {
-  //     console.error('Error submitting review:', error);
-  //   }
-  // };
+ 
   const handleSubmitReview = async (e) => {
     e.preventDefault();
   
@@ -65,16 +45,10 @@ const MyBookingCards = ({ bookings }) => {
       if (error.response && error.response.status === 400) {
         const { message, existingReview } = error.response.data;
   
-        // Log the existing review
         console.log('Existing review:', existingReview);
   
-        // Optionally show the message to the user
-        alert(message);
+        toast(message);
   
-        // You can also choose to display the existing review in the modal or elsewhere
-        // For example:
-        // setReviewText(existingReview.reviewText);
-        // setRating(existingReview.rating);
       }
     }
   };
