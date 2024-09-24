@@ -1,41 +1,25 @@
 
 import RootLayout from "../layouts/RootLayout";
-
 import UserLayout from "../layouts/UserLayout";
 import { createBrowserRouter } from "react-router-dom";
-
-
-
-
-// import AuthUser from "./protectedRoutes/AuthUser.jsx";
 import AdminLayout from "../layouts/AdminLayout";
 import AdminHomePage from "../pages/admin/AdminHomePage";
 import AdminReviewPage from "../pages/admin/AdminReviewPage";
-
 import AdminUserPage from "../pages/admin/AdminUserPage";
 import AdminLoginPage from "../pages/admin/AdminLoginPage";
 import UserHomePage from "../pages/User/UserHomePage";
 import UserCarlistPage from "../pages/User/UserCarlistPage";
-
 import UserCarDetailsPage from "../pages/User/UserCarDetailsPage";
 import UserBookingPage from "../pages/User/UserBookingPage";
 import PaymentSuccess from "../pages/User/PaymentSuccess";
 import PaymentCancel from "../pages/User/PaymentCancel";
-
-
-
 import ErrorPage from "../pages/Home/ErrorPage";
-
-
 import ContactPage from "../pages/Home/ContactPage";
-
 import AdminCarPage from "../pages/admin/AdminCarPage";
 import HomePage from "../pages/Home/HomePage"
 import SignupPage from "../pages/Home/SignupPage"
 import CarlistPage from "../pages/Home/CarlistPage";
 import UserAboutPage from "../pages/User/UserAboutPage";
-
-
 import UserContactPage from "../pages/User/UserContactPage"
 import UserLoginPage from "../pages/Home/UserLoginPage"
 import AboutPage from "../pages/Home/AboutPage";
@@ -53,7 +37,7 @@ import AdminContactMessage from "../pages/admin/AdminContactMessage";
 import Tearms from "../pages/User/Tearms";
 
 
-// import AboutPage from "../pages/HOME/AboutPage";
+
 
 export const router = createBrowserRouter([
     {
@@ -103,51 +87,51 @@ export const router = createBrowserRouter([
                 element: <UserHomePage />,
             },
             {
-                path: 'car', // Use relative path for the car list page
+                path: 'car', 
                 element: <UserCarlistPage />,
             },
             {
-                path: 'car-details/:id', // Use relative path for the car list page
+                path: 'car-details/:id', 
                 element: <UserCarDetailsPage/>,
             },
             {
-                path: 'car-details/booking/:id', // Use relative path for the car list page
+                path: 'car-details/booking/:id',
                 element: <UserBookingPage/>,
             },
             {
-                path: 'success', // Use relative path for the car list page
+                path: 'success',
                 element: <PaymentSuccess/>,
             },
             {
-                path: 'cancel', // Use relative path for the car list page
+                path: 'cancel', 
                 element: <PaymentCancel/>,
             },
             {
-                path: 'aboutpage', // Use relative path for the car list page
+                path: 'aboutpage', 
                 element: <UserAboutPage/>,
             },
             {
-                path: 'contactpage', // Use relative path for the car list page
+                path: 'contactpage', 
                 element: <UserContactPage/>,
             },
             {
-                path: 'mybooking', // Use relative path for the car list page
+                path: 'mybooking', 
                 element: <MyBooking/>,
             },
 
             {
-                path: 'myprofile', // Use relative path for the car list page
+                path: 'myprofile', 
                 element: <MyProfile/>,
             },
 
             {
-                path: 'Wishlist', // Use relative path for the car list page
+                path: 'Wishlist', 
                 element: <Wishlist/>,
             },
 
             
             {
-                path: 'Tearms', // Use relative path for the car list page
+                path: 'Tearms', 
                 element: <Tearms/>,
             },
 

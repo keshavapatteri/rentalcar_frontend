@@ -45,8 +45,8 @@ const UserHeader = () => {
           <Link to="/user/home" className="hover:text-yellow-300 transition-colors">Home</Link>
           <Link to="/user/car" className="hover:text-yellow-300 transition-colors">Car-List</Link>
           <Link to="/user/car" className="hover:text-yellow-300 transition-colors">Book Car</Link>
-          <Link to="/user/aboutpage" className="hover:text-yellow-300 transition-colors">About-Page</Link>
-          <Link to="/user/contactpage" className="hover:text-yellow-300 transition-colors">Contact-Page</Link>
+          <Link to="/user/aboutpage" className="hover:text-yellow-300 transition-colors">About</Link>
+          <Link to="/user/contactpage" className="hover:text-yellow-300 transition-colors">Contact</Link>
           
         </nav>
         <div className="dropdown dropdown-end">
@@ -92,8 +92,8 @@ const UserHeader = () => {
             <Link to="/user/home" className="hover:text-yellow-300 transition-colors" onClick={toggleMobileMenu}>Home</Link>
             <Link to="/user/car" className="hover:text-yellow-300 transition-colors" onClick={toggleMobileMenu}>Car-List</Link>
             <Link to="/user/car" className="hover:text-yellow-300 transition-colors" onClick={toggleMobileMenu}>Book Car</Link>
-            <Link to="/user/aboutpage" className="hover:text-yellow-300 transition-colors" onClick={toggleMobileMenu}>About-Page</Link>
-            <Link to="/user/contactpage" className="hover:text-yellow-300 transition-colors" onClick={toggleMobileMenu}>Contact-page</Link>
+            <Link to="/user/aboutpage" className="hover:text-yellow-300 transition-colors" onClick={toggleMobileMenu}>About</Link>
+            <Link to="/user/contactpage" className="hover:text-yellow-300 transition-colors" onClick={toggleMobileMenu}>Contact</Link>
            
               
             
