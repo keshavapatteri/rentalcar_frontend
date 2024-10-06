@@ -86,11 +86,11 @@ const UserCarDetailsPage = () => {
               >
                 <img
                   src="https://cdn.pixabay.com/photo/2021/07/02/04/48/user-6380868_640.png"
-                  alt={review.user.username}
+                  alt={review.user.username || `Not Available`}
                   className="w-16 h-16 rounded-full border-2 border-gray-300 dark:border-gray-600 mb-4"
                 />
                 <div className="text-lg font-semibold text-gray-800 dark:text-gray-100">
-                  {review.user.username}
+                  {review.user.username || `Not Available`}
                 </div>
                 <div className="mt-2 text-gray-700 dark:text-gray-300 text-center">Review Text:
                   {review.reviewText}
