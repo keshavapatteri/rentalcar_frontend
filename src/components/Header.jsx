@@ -36,8 +36,16 @@ const Header = () => {
                 <div className="hidden md:flex items-center space-x-4 md:space-x-6">
                     <DarkMode />
                     <Link to="/signup">
-                        <button className="btn btn-primary px-4 py-2 rounded-full bg-green-500 hover:bg-green-600 text-white font-semibold transition-colors">Join us</button>
-                    </Link>
+  <button className="btn btn-primary px-6 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold shadow-lg hover:shadow-xl transition-all duration-300">
+    Join us
+  </button>
+</Link>
+<Link to="/login">
+  <button className="btn btn-primary px-6 py-3 rounded-lg bg-purple-600 hover:bg-purple-700 text-white font-bold shadow-lg hover:shadow-xl transition-all duration-300">
+    Login
+  </button>
+</Link>
+
                     {/* <Link to="/admin-login">
                         <button className="btn btn-primary px-4 py-2 rounded-full bg-purple-500 hover:bg-purple-600 text-white font-semibold transition-colors">ADMIN-LOGIN</button>
                     </Link> */}

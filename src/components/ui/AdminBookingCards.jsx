@@ -1,16 +1,14 @@
 
 
-
 // import { toast } from 'react-hot-toast'; // Assuming you're using react-hot-toast for notifications
-
-// import { useEffect, useState } from 'react';
+// import { useState } from 'react';
 // import { axiosInstance } from '../../../config/axiosinstance';
 
 // const AdminBookingCards = ({ booking }) => {
-//   const [status,setStatus]=useState([]);
- 
+//   const [status, setStatus] = useState(null); // Store updated status here
+
 //   const {
-//      userId,
+//     userId,
 //     carId,
 //     pickuplocation,
 //     pickupdate,
@@ -22,32 +20,28 @@
 //     paymentStatus,
 //   } = booking;
 
-
-// console.log(`hyyyyy==============>`,booking)
-
-
-// const handleFetchStatus = async () => {
-//   try {
-//     const response = await axiosInstance.put(`/admin/bookingchange/${booking._id}`, {}, { withCredentials: true });
-//     setStatus(response?.data?.data || {});
-//     toast.success('Booking status updated');
-//   } catch (error) {
-//     console.error('Error updating status:', error);
-//     toast.error('Failed to update Booking status');
-//   }
-// };
-
-//   useEffect(() => {
-    
-//     handleFetchStatus();
-//   }, []);
+//   const handleFetchStatus = async () => {
+//     try {
+//       const response = await axiosInstance.put(
+//         `/admin/bookingchange/${booking._id}`,
+//         {},
+//         { withCredentials: true }
+        
+//       );
+//       setStatus(response?.data?.data || {}); // Update the status state with response
+//       toast.success('Booking status updated');
+//     } catch (error) {
+//       console.error('Error updating status:', error);
+//       toast.error('Failed to update booking status');
+//     }
+//   };
 
 //   const fetchnodemailer = async () => {
 //     try {
 //       const response = await axiosInstance.post('/nodemailer/create-message', {
 //         to: userId.email, // Send to the user's email                               
 //         subject: 'Booking Confirmation',
-//         text: `Your booking for the car with ID ${userId._id} has been confirmed.`,
+//         text: `Your booking for the car with ID ${carId._id} has been confirmed.`,
 //         html: `
 //           <h1>Dear ${userId.name},</h1>
 //           <h3 style="font-size: 1.25rem; font-weight: bold; color: blue;">🧳 Get set ready for your journey with Auto Cars</h3>
@@ -79,7 +73,6 @@
 //         `,
 //       });
 
-//       console.log(response);
 //       toast.success('Booking confirmation email sent successfully');
 //     } catch (error) {
 //       toast.error('Failed to send booking confirmation email');
@@ -90,21 +83,24 @@
 //   return (
 //     <div className="card w-full bg-base-100 shadow-xl">
 //       <div className="card-body">
-//       {carId.image ? (
-//   <img src={carId.image} alt={carId.title} className="w-full h-auto mb-4" />
-// ) : (
-//   <p>No image available</p>
-// )}
-//         {/* <h2 className="card-title">Booking Id #{_id}</h2> */}
+//         {carId.image ? (
+//           <img src={carId.image} alt={carId.title} className="w-full h-auto mb-4" />
+//         ) : (
+//           <p>No image available</p>
+//         )}
+        
 //         <h2 className="card-title">Payment Status: {paymentStatus}</h2>
+
 //         {/* Pickup Details */}
 //         <p><strong>Pickup Location:</strong> {pickuplocation}</p>
 //         <p><strong>Pickup Date:</strong> {pickupdate}</p>
 //         <p><strong>Pickup Time:</strong> {pickuptime}</p>
+
 //         {/* Drop-off Details */}
 //         <p><strong>Drop-off Location:</strong> {dropofflocation}</p>
 //         <p><strong>Drop-off Date:</strong> {dropoffdate}</p>
 //         <p><strong>Drop-off Time:</strong> {dropofftime}</p>
+
 //         {/* Total Cost */}
 //         <p><strong>Total Cost:</strong> ₹{totalcost}</p>
 
@@ -128,27 +124,28 @@
 //             <p><strong>User License Number:</strong> {userId.drivinglicencenumber || 'N/A'}</p>
 //             <p><strong>User Address:</strong> {userId.address || 'N/A'}</p>
 //           </>
-//         ) : <p>User details not available</p>}
+//         ) : <p class="text-red-500">User details not available</p>
+// }
+        
 //         <button
 //           onClick={fetchnodemailer}
 //           className="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700"
 //         >
-//           Node Mailer
+//           Send Email Confirmation
 //         </button>
+        
 //         <button
 //           onClick={handleFetchStatus}
 //           className="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700"
 //         >
-//           Send Booking Confirmation
+//           Update Booking Status
 //         </button>
-
 //       </div>
 //     </div>
 //   );
 // };
 
 // export default AdminBookingCards;
-
 import { toast } from 'react-hot-toast'; // Assuming you're using react-hot-toast for notifications
 import { useState } from 'react';
 import { axiosInstance } from '../../../config/axiosinstance';
@@ -178,6 +175,10 @@ const AdminBookingCards = ({ booking }) => {
       );
       setStatus(response?.data?.data || {}); // Update the status state with response
       toast.success('Booking status updated');
+
+      // Send the email after successful status update
+      fetchnodemailer();
+
     } catch (error) {
       console.error('Error updating status:', error);
       toast.error('Failed to update booking status');
@@ -276,17 +277,10 @@ const AdminBookingCards = ({ booking }) => {
 }
         
         <button
-          onClick={fetchnodemailer}
-          className="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700"
-        >
-          Send Email Confirmation
-        </button>
-        
-        <button
           onClick={handleFetchStatus}
           className="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700"
         >
-          Update Booking Status
+          Update Booking Status 
         </button>
       </div>
     </div>

@@ -42,15 +42,18 @@ const AdminReviewList = () => {
         {reviews.length > 0 ? (
           reviews.map((review) => (
             <AdminReviewListCards
-              key={review._id}
-              car={review.car}        // Ensure these match the actual structure of your review object
-              user={review.user}
-              rating={review.rating}
-              reviewText={review.reviewText}
-              reviewDate={review.reviewDate}  // Fixed the prop name here
-              userId={review.user}    // Add these if they exist in your review object
-              carId={review.car}  
-              ReviewId={review._id}     // Add these if they exist in your review object
+            key={review._id}
+            car={review.car.model} 
+            cars={review.car.title}
+            image={review.car.image} 
+            model={review.car.model} // Assuming car is an object, pass a specific property like car model
+            user={review.user.name}  // Assuming user is an object, pass a specific property like user name
+            rating={review.rating}
+            reviewText={review.reviewText}
+            reviewDate={review.reviewDate}
+            userId={review.user._id}  // Add specific fields to avoid passing whole object
+            carId={review.car._id}  
+            ReviewId={review._id}    // Add these if they exist in your review object
             />
           ))
         ) : (

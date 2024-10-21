@@ -81,6 +81,7 @@ const UserBookingPage = () => {
     }
   }, [watch('pickupdate'), watch('dropoffdate')]);
 
+
   // Handle payment
   const onSubmit = async (data) => {
     try {
@@ -102,14 +103,13 @@ const UserBookingPage = () => {
       const response = await userBooking(bookingData);
 
       if (response) {
-        // toast.success('Booking successful');
         console.log("bookingResponse ===>", response);
         await makePayment(bookingData);
       } else {
         toast.error('Unable to complete booking');
       }
     } catch (error) {
-      toast.error('Booking failed');
+      toast.error('This car is already booked during the selected dates');
     } finally {
       setIsSubmitting(false);
     }
@@ -245,9 +245,9 @@ const UserBookingPage = () => {
                   {...register('dropoffdate', { required: true })}
                   type="date"
                   className="input input-bordered"
-                  min={watch('pickupdate')} // Ensures dropoffdate is not before pickupdate
+                  min={new Date().toISOString().split('T')[0]}
                 />
-                {errors.dropoffdate && <p className="text-red-500">{errors.dropoffdate.message}</p>}
+                {errors.dropoffdate && <p className="text-red-500">Drop-off Date is required</p>}
               </div>
 
               <div className="form-control">
@@ -260,20 +260,21 @@ const UserBookingPage = () => {
                 {errors.dropofftime && <p className="text-red-500">Drop-off Time is required</p>}
               </div>
 
+              {/* Total Cost */}
               <div className="form-control">
-                <label className="label">Total Cost</label>
+                <label className="label">Total Cost (in ₹)</label>
                 <input
-                  {...register('totalcost', { required: true })}
-                  type="text"
-                  className="input input-bordered"
-                  value={`₹${totalCost || 0}`} // Display total cost
+                  {...register('totalcost')}
+                  value={totalCost || 0}
                   readOnly
+                  className="input input-bordered"
                 />
               </div>
 
+              {/* Submit Button */}
               <div className="form-control mt-6">
-                <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
-                  {isSubmitting ? 'Processing...' : 'Proceed to Payment'}
+                <button type="submit" className={`btn ${isSubmitting ? 'loading' : ''}`}>
+                  {isSubmitting ? 'Processing...' : 'Book Now'}
                 </button>
               </div>
             </form>

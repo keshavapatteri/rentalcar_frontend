@@ -2,7 +2,7 @@ import React from 'react';
 import { axiosInstance } from '../../../config/axiosinstance';
 import { Link } from 'react-router-dom';
 
-const AdminReviewListCards = ({ car, user, rating, reviewText, reviewDate, carId, userId, ReviewId }) => {
+const AdminReviewListCards = ({ car,cars, user,image,model, rating, reviewText, reviewDate, carId, userId, ReviewId }) => {
 
   const handleDeleteReview = async () => {
     try {
@@ -106,38 +106,57 @@ const AdminReviewListCards = ({ car, user, rating, reviewText, reviewDate, carId
     );
   };
 
-  return (
-    <div className="max-w-md mx-auto my-4">
-      <div className="card bg-base-100 shadow-xl">
-        <div className="card-body p-6">
-          <p className="text-gray-600">
-            <strong>Review ID:</strong> {ReviewId || 'Review ID not available'}
-          </p>
-          <p className="text-gray-600">
-            <strong>User ID:</strong> {userId || 'User ID not available'}
-          </p>
-          <p className="text-gray-600">
-            <strong>Car ID:</strong> {carId || 'Car ID not available'}
-          </p>
-          <p className="text-gray-600 flex items-center">
-            <strong>Rating:</strong>{' '}
-            {rating !== undefined ? getStarIcons(rating) : 'No rating available'}
-          </p>
-          <p className="text-gray-600">
-            <strong>Review:</strong> {reviewText || 'No review text'}
-          </p>
-          <p className="text-gray-600">
-            <strong>Date:</strong> {formattedDate}
-          </p>
-          <div>
-            <button className="btn btn-error" onClick={handleDeleteReview}>
-              DELETE
-            </button>
-            
-          </div>
+  return (<div className="max-w-md mx-auto my-8">
+    <div className="card bg-white shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-2xl">
+      <div className="card-body p-6">
+      {image && (
+          <img src={image} alt="Car Image" className="rounded-md w-full h-48 object-cover mb-4 shadow-md"/>
+        )}
+ <p className="text-gray-700 text-sm mb-2">
+          <strong className="text-gray-900">Car Brand:</strong> {cars || 'Car Brand not available'}
+        </p>
+        <p className="text-gray-700 text-sm mb-2">
+          <strong className="text-gray-900">Car Model:</strong> {model || 'Car Brand not available'}
+        </p>
+  
+           <p className="text-gray-700 text-sm mb-2">
+          <strong className="text-gray-900">User Name:</strong> {user || 'User Name not available'}
+        </p>
+       
+        <p className="text-gray-700 text-sm mb-2">
+          <strong className="text-gray-900">User ID:</strong> {userId || 'User ID not available'}
+        </p>
+     
+        <p className="text-gray-700 text-sm mb-2">
+          <strong className="text-gray-900">Car ID:</strong> {carId || 'Car ID not available'}
+        </p>
+       
+        <p className="text-gray-700 text-sm mb-2">
+          <strong className="text-gray-900">Review ID:</strong> {ReviewId || 'Review ID not available'}
+        </p>
+        <p className="text-gray-700 flex items-center mb-4">
+          <strong className="text-gray-900">Rating:</strong>{' '}
+          {rating !== undefined ? getStarIcons(rating) : 'No rating available'}
+        </p>
+  
+        <p className="text-gray-700 text-sm mb-4">
+          <strong className="text-gray-900">Review:</strong> {reviewText || 'No review text'}
+        </p>
+  
+        <p className="text-gray-700 text-sm mb-4">
+          <strong className="text-gray-900">Date:</strong> {formattedDate}
+        </p>
+  
+        <div className="flex justify-end">
+          {/* Uncomment if you want to add a delete button */}
+          {/* <button className="btn btn-error bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-300">
+            DELETE
+          </button> */}
         </div>
       </div>
     </div>
+  </div>
+  
   );
 };
 
